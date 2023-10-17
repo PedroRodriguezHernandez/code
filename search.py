@@ -100,22 +100,22 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
-    expansion_counter = 0
-    expasion = list()
+    visited_counter = 0
+    visited = list()
     while fringe:
         node = fringe.pop()
-        expansion_counter += 1
-        expasion.append(node)
+        visited_counter += 1
+        visited.append(node)
         if problem.goal_test(node.state):
             "Prints the number of expanded nodes in case it does not find an optimal solution"
-            print("we have expanded",expansion_counter,"times")
-            print("Expanded list:",expasion)
+            print("we have expanded",visited_counter,"times")
+            print("Expanded list:",visited)
             return node
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
     "Prints the number of expanded nodes in case it does not find an optimal solution"
-    print(expansion_counter)
+    print(visited_counter)
     return None
 
 
