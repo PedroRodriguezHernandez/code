@@ -112,6 +112,7 @@ def graph_search(problem, fringe):
             expanded_count += 1
             closed[node.state] = True
             fringe.extend(node.expand(problem))
+
     "Prints the number of expanded nodes in case it does not find an optimal solution"
     print(f'Visited nodes: {visited_counter}\nExpanded nodes: {expanded_count}')
     return None
