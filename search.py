@@ -3,8 +3,7 @@
 The way to use this code is to subclass Problem to create a class of problems,
 then create problem instances and solve them with calls to the various search
 functions."""
-
-
+import utils
 from utils import *
 import random
 import sys
@@ -100,21 +99,23 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
-    visited_counter, expanded_count = 0, 0
+    visited_counter = 0
+    expand_list = set()
     while fringe:
         node = fringe.pop()
         visited_counter += 1
         if problem.goal_test(node.state):
             "Prints the number of expanded nodes in case it does not find an optimal solution"
-            print(f'Visited nodes: {visited_counter}\nExpanded nodes: {expanded_count}')
+            print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)}')
             return node
         if node.state not in closed:
-            expanded_count += 1
             closed[node.state] = True
             fringe.extend(node.expand(problem))
+            for node in fringe:
+                expand_list.add(node)
 
     "Prints the number of expanded nodes in case it does not find an optimal solution"
-    print(f'Visited nodes: {visited_counter}\nExpanded nodes: {expanded_count}')
+    print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)}')
     return None
 
 
@@ -128,7 +129,9 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 
-
+def aguacate_search(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, SortList())
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.
 
