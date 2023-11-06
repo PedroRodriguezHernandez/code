@@ -101,21 +101,23 @@ def graph_search(problem, fringe):
     fringe.append(Node(problem.initial))
     visited_counter = 0
     expand_list = set()
+    expand_list.add(Node(problem.initial))
     while fringe:
         node = fringe.pop()
         visited_counter += 1
         if problem.goal_test(node.state):
             "Prints the number of expanded nodes in case it does not find an optimal solution"
-            print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)}')
+            print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)}, \n {expand_list}')
             return node
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
             for node in fringe:
                 expand_list.add(node)
+                "mirarlo con el node.expand(problem)"
 
     "Prints the number of expanded nodes in case it does not find an optimal solution"
-    print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)}')
+    print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)},\n {expand_list}')
     return None
 
 
@@ -129,9 +131,13 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 
-def aguacate_search(problem):
+def branch_and_bound(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
-    return graph_search(problem, SortList())
+    return graph_search(problem, PriorityQueue())
+
+def branch_and_bound_heuristic(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, PriorityQueueWithHeuristic(problem))
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.
 
