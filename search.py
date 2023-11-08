@@ -100,24 +100,19 @@ def graph_search(problem, fringe):
     closed = {}
     fringe.append(Node(problem.initial))
     visited_counter = 0
-    expand_list = set()
-    expand_list.add(Node(problem.initial))
+    expand_counter = 1  #Initial Node
     while fringe:
         node = fringe.pop()
         visited_counter += 1
         if problem.goal_test(node.state):
             "Prints the number of expanded nodes in case it does not find an optimal solution"
-            print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)}, \n {expand_list}')
+            print(f'Visited nodes: {visited_counter}\nExpanded nodes: {expand_counter}\nTotal cost: {node.path_cost}')
             return node
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
-            for node in fringe:
-                expand_list.add(node)
-                "mirarlo con el node.expand(problem)"
-
-    "Prints the number of expanded nodes in case it does not find an optimal solution"
-    print(f'Visited nodes: {visited_counter}\nExpanded nodes: {len(expand_list)},\n {expand_list}')
+            expand_counter += len(node.expand(problem))
+    print(f'Visited nodes: {visited_counter}\nExpanded nodes: {expand_counter}')
     return None
 
 

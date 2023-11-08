@@ -547,12 +547,6 @@ class FIFOQueue(Queue):
             self.start = 0
         return e
 
-    "We have created a method to be able to easily operate the A list."
-
-    def __iter__(self):
-        return iter(self.A)
-
-
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]
 Fig = {}
@@ -570,7 +564,6 @@ class PriorityQueue(Queue):
         self.A.append(item)
 
     "We sort the list from bigger cost to low cost, and then we extract for the end of the list"
-
     def extend(self, items):
         self.A.extend(items)
         self.A = sorted(self.A, key=lambda nodo: nodo.path_cost, reverse=True)
@@ -585,10 +578,9 @@ class PriorityQueue(Queue):
 
 
 class PriorityQueueWithHeuristic(PriorityQueue):
-
     def __init__(self, problem):
         super().__init__()
-        self.problem = problem;
+        self.problem = problem
 
     "We sort the list from bigger cost to low cost + heuristic, and then we extract for the end of the list"
     def extend(self, items):
